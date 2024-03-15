@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -28,8 +28,30 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const colorText = {
+    color: isDarkMode ? Colors.lighter : Colors.darker,
+  };
+
+  const [task, setTask] = useState([
+    {
+      status: false,
+      name: 'Primera tarea por completar',
+      date: '2021-10-10'
+    },
+    {
+      status: false,
+      name: 'Segunda tarea por completar',
+      date: '2021-10-10'
+    },
+    {
+      status: false,
+      name: 'Tercera tarea por completar',
+      date: '2021-10-10'
+    },
+  ]);
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={[backgroundStyle, styles.content]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -38,20 +60,67 @@ function App(): React.JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-            <Text style={[{marginTop: 30}, styles.colorText]}>Bienvenidos al primer commit</Text>
-            <Text style={[{marginTop: 30}, styles.colorText]}>Compilaciones de ios y android</Text>
+          style={[backgroundStyle, styles.viewInt]}>
+            <Text style={[styles.title, colorText]}>Tus tareas</Text>
+        </View>
+
+        {/* Se crea una seccion para iterar las lateras que hay actualmente */}
+        <View style={styles.listTask}>
+          {/* La etiqueta fragment se utiliza para poder retornar mas de un elemento*/}
+          <>
+            {
+              // Se introduce codigo typescript para iterar las tareas luego se retorna unasección
+              task.map((item, index) => {
+                return (
+                 <FormatTask taskRecibe={item} />
+                )
+              })
+            }
+          </>
+
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+
+
 }
 
+  interface Task {
+    status: boolean,
+    name: string,
+    date: string
+  }
+
+
+  export function FormatTask( {taskRecibe} : {taskRecibe: Task}) {
+      return (
+        <View style={styles.listTask}>
+          <Text>{taskRecibe.name}</Text>
+        </View>
+      )
+  }
+
 const styles = StyleSheet.create({
-  colorText: {
-    color: 'red'
+  content: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  viewInt: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listTask: {
+    marginTop: 20,
+    paddingHorizontal: 14,
+  },
+  textGeneral: {
+    fontSize: 15,
   }
 });
 
