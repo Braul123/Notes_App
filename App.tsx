@@ -48,6 +48,11 @@ function App(): React.JSX.Element {
       name: 'Tercera tarea por completar',
       date: '2021-10-10'
     },
+    {
+      status: false,
+      name: 'Cuarta tarea por completar',
+      date: '2021-10-10'
+    },
   ]);
 
   return (
@@ -70,9 +75,14 @@ function App(): React.JSX.Element {
           <>
             {
               // Se introduce codigo typescript para iterar las tareas luego se retorna unasección
-              task.map((item, index) => {
+              task.map((item) => {
                 return (
-                 <FormatTask taskRecibe={item} />
+                  <>
+                  <FormatTask taskRecibe={item} />
+                  </>
+                // <View style={styles.listTask}>
+                //   <Text>{item.name}</Text>
+                // </View>
                 )
               })
             }
@@ -82,8 +92,6 @@ function App(): React.JSX.Element {
       </ScrollView>
     </SafeAreaView>
   );
-
-
 }
 
   interface Task {
@@ -92,7 +100,7 @@ function App(): React.JSX.Element {
     date: string
   }
 
-
+  // Retorna una seccion dedicada al tratamiento de una tarea
   export function FormatTask( {taskRecibe} : {taskRecibe: Task}) {
       return (
         <View style={styles.listTask}>
